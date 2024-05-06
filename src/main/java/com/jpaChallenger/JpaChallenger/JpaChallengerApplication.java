@@ -17,6 +17,8 @@ public class JpaChallengerApplication implements CommandLineRunner {
 		SpringApplication.run(JpaChallengerApplication.class, args);
 	}
 
+
+
 	@Override
 	public void run(String... args) throws Exception {
 		Menu menu=new Menu(singerRepository);
