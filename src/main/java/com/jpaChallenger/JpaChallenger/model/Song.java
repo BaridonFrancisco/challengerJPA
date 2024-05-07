@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cancion")
-public class Cancion {
+public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -12,22 +12,22 @@ public class Cancion {
     private Double duration;
     private String album;
     @ManyToOne
-    private Cantante singer;
+    private Singer singer;
 
-    public Cancion() {
+    public Song() {
     }
 
-    public Cancion(String album, Double duration, String name) {
+    public Song(String album, Double duration, String name) {
         this.album = album;
         this.duration = duration;
         this.name = name;
     }
 
-    public Cantante getSinger() {
+    public Singer getSinger() {
         return singer;
     }
 
-    public void setSinger(Cantante singer) {
+    public void setSinger(Singer singer) {
         this.singer = singer;
     }
 

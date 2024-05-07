@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Table(name = "cantante")
-public class Cantante {
+public class Singer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,12 +26,12 @@ public class Cantante {
 
     private String musicStyle;
     @OneToMany(mappedBy = "singer",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    List<Cancion>listSongs=new ArrayList<>();
+    List<Song>listSongs=new ArrayList<>();
 
-    public Cantante() {
+    public Singer() {
     }
 
-    public Cantante(String name, String lastName, Integer age, String city, LocalDate birthDate, String nationality, String musicStyle) {
+    public Singer(String name, String lastName, Integer age, String city, LocalDate birthDate, String nationality, String musicStyle) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
@@ -41,11 +41,11 @@ public class Cantante {
         this.musicStyle = musicStyle;
     }
 
-    public List<Cancion> getListSongs() {
+    public List<Song> getListSongs() {
         return listSongs;
     }
 
-    public void setListSongs(List<Cancion> listSongs) {
+    public void setListSongs(List<Song> listSongs) {
         this.listSongs = listSongs;
     }
 
@@ -104,7 +104,7 @@ public class Cantante {
     public void setName(String name) {
         this.name = name;
     }
-    public void addSong(Cancion c){
+    public void addSong(Song c){
         this.listSongs.add(c);
     }
 
@@ -113,7 +113,7 @@ public class Cantante {
 
     @Override
     public String toString() {
-        return 	"*****Cantante*****\n"+
+        return 	"*****Singer*****\n"+
                 " Nombre:" + name + "\n"+
                 " Apellido: " + lastName + "\n"+
                 " Edad: " + age + "\n"+
