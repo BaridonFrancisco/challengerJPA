@@ -3,6 +3,7 @@ package com.jpaChallenger.JpaChallenger.Service;
 
 import com.jpaChallenger.JpaChallenger.model.Singer;
 import com.jpaChallenger.JpaChallenger.model.Song;
+import com.jpaChallenger.JpaChallenger.model.Style;
 import com.jpaChallenger.JpaChallenger.repository.SingerRepository;
 
 import java.time.DateTimeException;
@@ -24,7 +25,9 @@ public class Menu {
                     Menu
                     1.Registrar cantante
                     2.Registrar cancion para un cantante
-                    3.Buscar canciones por cantante
+                    3.Mostrar todas las canciones
+                    4.Buscar cantante
+                    5.Buscar canciones por  cantante
                     0.Salir""");
             op= sc.nextInt();
             switch (op){
@@ -51,7 +54,26 @@ public class Menu {
 
                     });
                 case 3:
-
+                    List<Singer>listSinger=singerRepository.findAll();
+                    listSinger.forEach(singer->singer.getListSongs().forEach(System.out::println));
+                    break;
+                case 4:
+                    sc.nextLine();
+                    System.out.println("Ingrese el nombre del cantante");
+                    String singer=sc.nextLine();
+                    var re=singerRepository.findByName(singer);
+                    if(re.isPresent()){
+                        System.out.println(re.get());
+                    }else {
+                        System.out.println("Cantante no encontrado");
+                    }
+                    break;
+                case 5:
+                    System.out.println("Ingrese el estilo del cantante");
+                    var ss=singerRepository.findSongsBySinger("Open your Heart");
+                    System.out.println(ss);
+                    break;
+                case 6:
                     break;
                 default:
                     System.out.println("Opcion incorrecta");
@@ -79,7 +101,7 @@ public class Menu {
             System.out.println("Ingrese la nacionalidad del cantante");
             String nationality=sc.nextLine();
             System.out.println("Ingrese cual es su estilo musical puede pop,rock");
-            String style=sc.nextLine();
+            Style style=Style.fromStyle(sc.nextLine());
             System.out.println("A continuacion se le solicitara la fecha de nacimiento del cantante");
             System.out.println("En que anio nacio");
             int year= sc.nextInt();
@@ -116,4 +138,6 @@ public class Menu {
         }
         return null;
     }
+
+
 }

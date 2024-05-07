@@ -24,14 +24,16 @@ public class Singer {
 
     private String nationality;
 
-    private String musicStyle;
+    @Convert(converter = StyleConvert.class)
+    private Style musicStyle;
+
     @OneToMany(mappedBy = "singer",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     List<Song>listSongs=new ArrayList<>();
 
     public Singer() {
     }
 
-    public Singer(String name, String lastName, Integer age, String city, LocalDate birthDate, String nationality, String musicStyle) {
+    public Singer(String name, String lastName, Integer age, String city, LocalDate birthDate, String nationality, Style musicStyle) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
@@ -49,11 +51,11 @@ public class Singer {
         this.listSongs = listSongs;
     }
 
-    public String getMusicStyle() {
+    public Style getMusicStyle() {
         return musicStyle;
     }
 
-    public void setMusicStyle(String musicStyle) {
+    public void setMusicStyle(Style musicStyle) {
         this.musicStyle = musicStyle;
     }
 
