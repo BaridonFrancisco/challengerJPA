@@ -16,9 +16,10 @@ import java.util.Optional;
 public interface SingerRepository extends JpaRepository<Singer,Long> {
 
     Optional<Singer>findByName(String nombre);
-    List<Singer>findByStyle(Style style);
-    @Query("SELECT song FROM Singer s JOIN s.listSongs song WHERE song.name ILIKE %:songName%")
-    List<Song> findSongsBySinger(String songName);
-    /*@Query(value = "SELECT * FROM cantante c WHERE c.musicStyle ",nativeQuery = true)
-    List<Song>findSongsByStyle();*/
+    List<Singer> findByMusicStyle(Style style);
+    @Query("SELECT song FROM Singer s JOIN s.listSongs song WHERE s.name ILIKE %:singerName%")
+    List<Song> findSongsBySinger(String singerName);
+    @Query("SELECT song FROM Singer s JOIN s.listSongs song WHERE s.name ILIKE %:singer% AND song.album ILIKE %:album%")
+    List<Song>findByAlbumAndSinger(String singer,String album);
+
 }

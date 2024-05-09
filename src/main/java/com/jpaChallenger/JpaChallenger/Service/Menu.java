@@ -28,13 +28,16 @@ public class Menu {
                     3.Mostrar todas las canciones
                     4.Buscar cantante
                     5.Buscar canciones por  cantante
+                    6.Buscar cantante por estilo
+                    7.Buscar canciones por album y cantante
                     0.Salir""");
             op= sc.nextInt();
             switch (op){
+                case 0:
+                    System.out.println("Saliendo...");
+                    break;
                 case 1:
-                    createSinger().ifPresent(sin->{
-                        singerRepository.save(sin);
-                    });
+                    createSinger().ifPresent(sin->singerRepository.save(sin));
                     break;
                 case 2:
                     sc.nextLine();
@@ -69,11 +72,29 @@ public class Menu {
                     }
                     break;
                 case 5:
-                    System.out.println("Ingrese el estilo del cantante");
-                    var ss=singerRepository.findSongsBySinger("Open your Heart");
-                    System.out.println(ss);
+                    sc.nextLine();
+                    System.out.println("Ingrese el nombre del cantante");
+                    String singerName=sc.nextLine();
+                    var ss=singerRepository.findSongsBySinger(singerName);
+                    ss.forEach(System.out::println);
                     break;
                 case 6:
+                    sc.nextLine();
+                    System.out.println("Ingrese el estilo del cantante");
+                    Style style=Style.fromStyle(sc.nextLine());
+                    List<Singer>sin=singerRepository.findByMusicStyle(style);
+                    if(!sin.isEmpty()){
+                        sin.forEach(System.out::println);
+                    }
+                    break;
+                case 7:
+                    sc.nextLine();
+                    System.out.println("Ingrese el nombre del cantante");
+                    String singerName2=sc.nextLine();
+                    System.out.println("Ingrese el nombre del album");
+                    String album=sc.nextLine();
+                    var res=singerRepository.findByAlbumAndSinger(singerName2,album);
+                    res.forEach(System.out::println);
                     break;
                 default:
                     System.out.println("Opcion incorrecta");
@@ -115,6 +136,8 @@ public class Menu {
             System.out.println("No ha ingresado un valor correcto");
         }catch (DateTimeException e){
             System.out.println("Fecha formada incorrectamente");
+        }catch (Exception e){
+            System.out.println("Ha ocurrido una excepcion"+e.getMessage());
         }
         return Optional.ofNullable(singer);
 
